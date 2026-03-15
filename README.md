@@ -28,5 +28,19 @@ docker run -e RUNNER_TOKEN=... -e RUNNER_ORG=... your-dockerhub-username/gha-run
 ## Building locally
 
 ```bash
-docker build -t gha-runner .
+make build
+# or: docker build -t gha-runner .
 ```
+
+## Publishing the image
+
+1. Log in to Docker Hub: `docker login`
+2. Build and push with your username:
+
+```bash
+make push DOCKER_USER=your-dockerhub-username
+```
+
+The image will be pushed as `your-dockerhub-username/gha-runner:latest` and `your-dockerhub-username/gha-runner:<git-sha>`. To make it public, set the repository visibility to **Public** in [Docker Hub](https://hub.docker.com/) (Repository settings → Make Public).
+
+Alternatively, each push to `main` triggers the GitHub Actions workflow which builds and pushes the image using the `DOCKERHUB_USERNAME` and `DOCKERHUB_PAT` secrets.
