@@ -2,7 +2,7 @@ FROM ghcr.io/actions/actions-runner:latest
 
 USER root
 
-# Install common CI tools in a single layer; remove apt lists to keep image small
+# Install common CI tools + C compiler
 RUN apt-get update && apt-get install -y \
     make \
     git \
@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     bash \
     ca-certificates \
     jq \
+    build-essential \
  && rm -rf /var/lib/apt/lists/*
 
 USER runner
