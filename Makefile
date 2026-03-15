@@ -6,7 +6,7 @@ SHA := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 .PHONY: build push
 
 build:
-	docker build -t $(IMAGE):latest .
+	docker build --platform linux/amd64 -t $(IMAGE):latest .
 	docker tag $(IMAGE):latest $(IMAGE):$(SHA)
 
 push: build
