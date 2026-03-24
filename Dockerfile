@@ -2,6 +2,8 @@ FROM ghcr.io/actions/actions-runner:latest
 
 USER root
 
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+
 # Base tools + ffmpeg + fonts
 RUN apt-get update && apt-get install -y \
     make \
@@ -22,13 +24,9 @@ RUN apt-get update && apt-get install -y \
     fonts-liberation \
     fonts-dejavu \
     fonts-freefont-ttf \
+    nodejs \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
- # Download and install nvm:
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
-RUN source "$HOME/.nvm/nvm.sh"
-RUN nvm install 24
 
 USER runner
 
