@@ -10,10 +10,17 @@ Docker image based on the [official GitHub Actions runner](https://github.com/ac
 - **curl** – HTTP client
 - **wget** – File download
 - **tar** – Archive creation and extraction
+- **xz-utils** – `.xz` / LZMA archives
 - **zip** / **unzip** – Archive handling
 - **bash** – Shell
 - **ca-certificates** – TLS/HTTPS certificates
 - **jq** – JSON processing in scripts
+- **build-essential** – C/C++ compiler toolchain (gcc, g++, etc.)
+- **openssh-client** – `ssh`, `scp`, `ssh-keyscan` (GitHub host key pre-seeded in `known_hosts`)
+- **ffmpeg** – Audio/video processing
+- **fonts-liberation**, **fonts-dejavu**, **fonts-freefont-ttf** – Fonts for headless rendering
+- **nodejs** / **npm** – JavaScript runtime and package manager
+- **Chromium** (via Playwright) – Headless browser for E2E tests (`npx playwright` already available)
 
 ## Usage
 
