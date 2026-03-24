@@ -2,10 +2,10 @@ FROM ghcr.io/actions/actions-runner:latest
 
 USER root
 
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
-
 # Base tools + ffmpeg + fonts
-RUN apt-get update && apt-get install -y \
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+ && apt-get update \
+ && apt-get install -y \
     make \
     git \
     yq \
