@@ -22,10 +22,13 @@ RUN apt-get update && apt-get install -y \
     fonts-liberation \
     fonts-dejavu \
     fonts-freefont-ttf \
-    nodejs \
-    npm \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+ # Download and install nvm:
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+RUN source "$HOME/.nvm/nvm.sh"
+RUN nvm install 24
 
 USER runner
 
