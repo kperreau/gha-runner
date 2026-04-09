@@ -8,7 +8,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
  && apt-get install -y \
     make \
     git \
-    yq \
     curl \
     wget \
     tar \
@@ -27,7 +26,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     fonts-freefont-ttf \
     nodejs \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && YQ_ARCH=$(dpkg --print-architecture) \
+ && case "$YQ_ARCH" in amd64|arm64) ;; *) echo "yq: unsupported arch $YQ_ARCH"; exit 1 ;; esac \
+ && curl -fsSL "https://github.com/mikefarah/yq/releases/download/v4.52.5/yq_linux_${YQ_ARCH}" -o /usr/bin/yq \
+ && chmod +x /usr/bin/yq
 
 USER runner
 

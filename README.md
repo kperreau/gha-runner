@@ -6,7 +6,7 @@ Docker image based on the [official GitHub Actions runner](https://github.com/ac
 
 - **make** – Build automation
 - **git** – Version control
-- **yq** – YAML/JSON processing in scripts
+- **yq** ([mikefarah/yq](https://github.com/mikefarah/yq)) – YAML/JSON processing; same CLI as most CI examples (not Debian’s `apt` `yq`, which is a different tool)
 - **curl** – HTTP client
 - **wget** – File download
 - **tar** – Archive creation and extraction
