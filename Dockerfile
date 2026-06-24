@@ -2,8 +2,11 @@ FROM ghcr.io/actions/actions-runner:latest
 
 USER root
 
+ARG BUILD_DATE=manual
+
 # Base tools + ffmpeg + fonts
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+RUN echo "Build ${BUILD_DATE}" \
+ && curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
  && apt-get update \
  && apt-get install -y \
     make \
