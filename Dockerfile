@@ -1,4 +1,4 @@
-FROM ghcr.io/actions/actions-runner:latest
+FROM ghcr.io/actions/actions-runner:2.337.0
 
 USER root
 
@@ -8,6 +8,7 @@ ARG BUILD_DATE=manual
 RUN echo "Build ${BUILD_DATE}" \
  && curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
  && apt-get update \
+ && apt-get upgrade -y \
  && apt-get install -y \
     make \
     git \
@@ -32,10 +33,13 @@ RUN echo "Build ${BUILD_DATE}" \
  && rm -rf /var/lib/apt/lists/* \
  && YQ_ARCH=$(dpkg --print-architecture) \
  && case "$YQ_ARCH" in amd64|arm64) ;; *) echo "yq: unsupported arch $YQ_ARCH"; exit 1 ;; esac \
- && curl -fsSL "https://github.com/mikefarah/yq/releases/download/v4.52.5/yq_linux_${YQ_ARCH}" -o /usr/bin/yq \
+ && curl -fsSL "https://github.com/mikefarah/yq/releases/download/v4.53.6/yq_linux_${YQ_ARCH}" -o /usr/bin/yq \
  && chmod +x /usr/bin/yq
 
 USER runner
+
+ENV NPM_CONFIG_PREFIX=/home/runner/.local
+ENV PATH=/home/runner/.local/bin:${PATH}
 
 # Preseed GitHub's SSH host key in known_hosts
 RUN mkdir -p /home/runner/.ssh \
@@ -45,5 +49,6 @@ RUN mkdir -p /home/runner/.ssh \
  && ssh-keyscan github.com >> /home/runner/.ssh/known_hosts
 
 # Install headless Chromium and its dependencies (Playwright handles everything)
-RUN npx -y playwright@latest install chromium \
+RUN npm install -g playwright@latest \
+ && playwright install chromium \
  && npm cache clean --force
